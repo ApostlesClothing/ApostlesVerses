@@ -12,21 +12,21 @@ body {
   width: 100vw;
   height: 100vh;
   object-fit: contain;
+  z-index: 0;
 }
+
 #logo-hotspot {
   position: fixed;
+  bottom: 6.5%;
   left: 30%;
   width: 40%;
   height: 10%;
-  bottom: 8%; /* default for desktop */
   cursor: pointer;
   z-index: 10;
 }
 
-/* Adjust hotspot position for smaller screens */
 @media (max-width: 600px) {
   #logo-hotspot {
-    bottom: 14%;  /* move it down lower for phones */
+    bottom: 12%;
   }
 }
-
