@@ -51,3 +51,8 @@ h1 {
   transform: scale(0.98);
   box-shadow: 0 0 24px rgba(255,255,255,0.8);
 }
+.grid {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+}
+

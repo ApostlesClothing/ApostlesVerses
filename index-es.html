@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temas Bíblicos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="topics.css" />
+</head>
+<body>
+  <main>
+    <h1>Seleccione un Tema de Versículo Bíblico</h1>
+    <div class="grid">
+      <a href="viewer.html?category-es=esperanza" class="card">💡 Esperanza</a>
+      <a href="viewer.html?category-es=amor" class="card">💖 Amor</a>
+      <a href="viewer.html?category-es=fortaleza" class="card">💪 Fortaleza</a>
+      <a href="viewer.html?category-es=perdón" class="card">💝 Perdón</a>
+      <a href="viewer.html?category-es=tentación" class="card">🔥 Tentación</a>
+      <a href="viewer.html?category-es=guía" class="card">🧭 Guía</a>
+      <a href="viewer.html?category-es=ira" class="card">😡 Ira</a>
+      <a href="viewer.html?category-es=miedo" class="card">🥶 Miedo</a>
+      <a href="viewer.html?category-es=preocupación" class="card">😟 Preocupación</a>
+      <a href="viewer.html?category-es=alegría" class="card">😊 Alegría</a>
+      <a href="viewer.html?category-es=tristeza" class="card">😔 Tristeza</a>
+      <a href="#" onclick="goToRandomEs()" class="card">📖 Versículo Aleatorio</a>
+    </div>
+  </main>
+  <script>
+    function goToRandomEs() {
+      const topics = ["esperanza", "amor", "fortaleza", "perdón", "tentación", "guía", "ira", "miedo", "preocupación", "alegría", "tristeza"];
+      const random = topics[Math.floor(Math.random() * topics.length)];
+      window.location.href = "viewer.html?category-es=" + random;
+    }
+  </script>
+</body>
+</html>
