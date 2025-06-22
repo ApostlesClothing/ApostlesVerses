@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+#daily-photo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;
+}
+#logo-hotspot {
+  position: fixed;
+  bottom: 8%;
+  left: 30%;
+  width: 40%;
+  height: 10%;
+  cursor: pointer;
+  z-index: 10;
+}
+

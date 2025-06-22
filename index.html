@@ -2,21 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Topic Viewer with Logo Trigger</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select a Topic</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="grid.css" />
 </head>
 <body>
-  <div id="container">
-    <div id="logo-hotspot"></div>
-    <img id="daily-photo" src="" alt="Daily Image" />
-    <div id="dropdown">
-      <button onclick="selectCategory('hope')">Hope</button>
-      <button onclick="selectCategory('motivation')">Motivation</button>
-      <button onclick="selectCategory('lust')">Lust</button>
-      <button onclick="selectCategory('love')">Love</button>
+  <main>
+    <h1>Select a Bible Verse Topic</h1>
+    <div class="grid">
+      <a href="viewer.html?category=hope" class="card">🕊 Hope</a>
+      <a href="viewer.html?category=love" class="card">❤️ Love</a>
+      <a href="viewer.html?category=strength" class="card">💪 Strength</a>
+
+      <a href="viewer.html?category=forgiveness" class="card">💗 Forgiveness</a>
+      <a href="viewer.html?category=temptation" class="card">🔥 Temptation</a>
+      <a href="viewer.html?category=guidance" class="card">🧭 Guidance</a>
+
+      <a href="viewer.html?category=anger" class="card">😠 Anger</a>
+      <a href="viewer.html?category=fear" class="card">😨 Fear</a>
+      <a href="viewer.html?category=worry" class="card">😟 Worry</a>
+<a href="viewer.html?category=faith" class="card">😃 Joy</a>
+<a href="viewer.html?category=faith" class="card">😞 Sadness</a>
+<a href="viewer.html?category=faith" class="card">🔁 Random Verse</a>
+
+
     </div>
-  </div>
-  <script src="script.js"></script>
+  </main>
 </body>
 </html>
