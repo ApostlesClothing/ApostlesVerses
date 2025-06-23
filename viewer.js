@@ -12,3 +12,6 @@ document.getElementById("daily-photo").src = `images/${category}/${imageNumber}.
 document.getElementById("logo-hotspot").addEventListener("click", () => {
   window.location.href = "index.html";
 });
+document.getElementById("like-hotspot").addEventListener("click", () => {
+  window.location.href = "index.html";  
+});

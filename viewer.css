@@ -30,3 +30,20 @@ body {
     bottom: 12%;
   }
 }
+#like-hotspot {
+  position: fixed;
+  bottom: 6.5%;    /* adjust this based on where your logo sits */
+  left: 25%;       /* center it horizontally */
+  width: 40%;      /* size of clickable area */
+  height: 10%;     /* height of clickable area */
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Optional: better position for phones */
+@media (max-width: 600px) {
+  #like-hotspot {
+    bottom: 12%;
+  }
+}
+
