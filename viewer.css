@@ -33,7 +33,7 @@ body {
 #like-hotspot {
   position: fixed;
   bottom: 6.5%;    /* adjust this based on where your logo sits */
-  left: 20%;       /* center it horizontally */
+  left: 15%;       /* center it horizontally */
   width: 40%;      /* size of clickable area */
   height: 10%;     /* height of clickable area */
   cursor: pointer;
