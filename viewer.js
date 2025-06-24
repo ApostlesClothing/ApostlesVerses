@@ -52,4 +52,24 @@ favoriteToggle.addEventListener("click", toggleFavorite);
 // Initialize heart icon on load
 updateHeartIcon();
 
+const shareButton = document.getElementById("share-button");
+
+shareButton.addEventListener("click", async () => {
+  const imageUrl = `https://apostlesclothing.github.io/ApostlesVerses/index.html`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: `Verse of the Day - ${category}`,
+        text: `Check out this verse from the "${category}" topic!`,
+        url: imageUrl,
+      });
+    } catch (err) {
+      console.error("Share canceled or failed:", err);
+    }
+  } else {
+    alert("Sharing is not supported on this browser.");
+  }
+});
+
 

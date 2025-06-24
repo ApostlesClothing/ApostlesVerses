@@ -50,7 +50,7 @@ body {
 }
 #favorite-toggle {
   position: fixed;
-  bottom: 16.1%;       
+  bottom: 16.2%;       
   left: 76%;          
   font-size: 2rem;
   cursor: pointer;
@@ -77,4 +77,14 @@ body {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1.5);
 }
+#share-button {
+  position: fixed;
+  bottom: 16.2%;       
+  right: 76%;         
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 10;
+  user-select: none;
+}
+
 
