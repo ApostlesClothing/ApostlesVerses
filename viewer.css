@@ -60,8 +60,8 @@ body {
 }
 #favorite-toggle {
   position: fixed;
-  bottom: 7%;       
-  left: 63%;          
+  bottom: 10%;       
+  left: 70%;          
   font-size: 2rem;
   cursor: pointer;
   z-index: 10;
