@@ -50,7 +50,7 @@ body {
 }
 #favorite-toggle {
   position: fixed;
-  bottom: 9%;       
+  bottom: 16.5%;     
   left: 76%;          
   font-size: 2rem;
   cursor: pointer;
@@ -79,7 +79,7 @@ body {
 }
 #share-button {
   position: fixed;
-  bottom: 9.5%;       
+  bottom: 17%;       
   right: 76%;         
   font-size: 2rem;
   cursor: pointer;
