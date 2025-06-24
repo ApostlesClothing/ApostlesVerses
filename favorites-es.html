@@ -2,81 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Favoritos (Español)</title>
+  <title>Favoritos por Tema (Español)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="favorites-style.css" />
 </head>
 <body>
-  <header>
-    <a href="index-es.html" class="back-button">← Volver a Temas</a>
-    <h1>⭐ Versículos Favoritos (Español)</h1>
-  </header>
-
-  <div class="image-grid" id="favoritesGrid"></div>
-  <p id="no-favs" style="text-align:center; opacity: 0.6;">No hay favoritos aún para este tema.</p>
-
-  <div id="lightbox" onclick="this.style.display='none'">
-    <img id="lightbox-img" src="" alt="Vista completa" />
+  <a href="index-es.html" class="back-button">← Volver a Inicio</a>
+  <h1>⭐ Versículos Favoritos por Tema</h1>
+  <div class="grid">
+    <a href="favorites-es-esperanza.html" class="card">🕊 Esperanza</a>
+    <a href="favorites-es-amor.html" class="card">❤️ Amor</a>
+    <a href="favorites-es-fortaleza.html" class="card">💪 Fortaleza</a>
+    <a href="favorites-es-perdon.html" class="card">💗 Perdón</a>
+    <a href="favorites-es-tentacion.html" class="card">🔥 Tentación</a>
+    <a href="favorites-es-guia.html" class="card">🧭 Guía</a>
+    <a href="favorites-es-ira.html" class="card">😠 Ira</a>
+    <a href="favorites-es-miedo.html" class="card">😨 Miedo</a>
+    <a href="favorites-es-preocupacion.html" class="card">😟 Preocupación</a>
+    <a href="favorites-es-alegria.html" class="card">😃 Alegría</a>
+    <a href="favorites-es-tristeza.html" class="card">😞 Tristeza</a>
+    <a href="index-es.html" class="card">📃 Temas</a>
   </div>
-
-  <div id="heart-effect">❤️</div>
-
-  <script>
-    const favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
-    const filtered = favorites;
-
-    const container = document.getElementById("favoritesGrid");
-    const noFavs = document.getElementById("no-favs");
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
-    const heartEffect = document.getElementById("heart-effect");
-
-    function isFavorited(image) {
-      return favorites.some(f => f.category === image.category && f.imageNumber === image.imageNumber);
-    }
-
-    function toggleFavorite(image, icon) {
-      const index = favorites.findIndex(f => f.category === image.category && f.imageNumber === image.imageNumber);
-      if (index >= 0) {
-        favorites.splice(index, 1);
-        icon.textContent = "🤍";
-      } else {
-        favorites.push(image);
-        icon.textContent = "❤️";
-        heartEffect.classList.add("active");
-        setTimeout(() => heartEffect.classList.remove("active"), 700);
-      }
-      localStorage.setItem("favorites-es", JSON.stringify(favorites));
-    }
-
-    if (filtered.length === 0) {
-      noFavs.style.display = "block";
-    } else {
-      noFavs.style.display = "none";
-      filtered.forEach(fav => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "image-wrapper";
-
-        const img = document.createElement("img");
-        img.src = `images/${fav.category}/${fav.imageNumber}.png`;
-        img.onclick = () => {
-          lightboxImg.src = img.src;
-          lightbox.style.display = "flex";
-        };
-
-        const heart = document.createElement("div");
-        heart.className = "favorite-icon";
-        heart.textContent = isFavorited(fav) ? "❤️" : "🤍";
-        heart.onclick = (e) => {
-          e.stopPropagation();
-          toggleFavorite(fav, heart);
-        };
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(heart);
-        container.appendChild(wrapper);
-      });
-    }
-  </script>
 </body>
 </html>
