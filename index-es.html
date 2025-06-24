@@ -11,27 +11,34 @@
   <main>
     <h1>Seleccione un Tema de Versículo Bíblico</h1>
     <div class="grid">
-      <a href="viewer.html?category-es=esperanza" class="card">💡 Esperanza</a>
-      <a href="viewer.html?category-es=amor" class="card">💖 Amor</a>
+      <a href="viewer.html?category-es=esperanza" class="card">🕊 Esperanza</a>
+      <a href="viewer.html?category-es=amor" class="card">❤️ Amor</a>
       <a href="viewer.html?category-es=fortaleza" class="card">💪 Fortaleza</a>
-      <a href="viewer.html?category-es=perdón" class="card">💝 Perdón</a>
-      <a href="viewer.html?category-es=tentación" class="card">🔥 Tentación</a>
-      <a href="viewer.html?category-es=guía" class="card">🧭 Guía</a>
-      <a href="viewer.html?category-es=ira" class="card">😡 Ira</a>
-      <a href="viewer.html?category-es=miedo" class="card">🥶 Miedo</a>
-      <a href="viewer.html?category-es=preocupación" class="card">😟 Preocupación</a>
-      <a href="viewer.html?category-es=alegría" class="card">😊 Alegría</a>
-      <a href="viewer.html?category-es=tristeza" class="card">😔 Tristeza</a>
-      <a href="#" onclick="goToRandomEs()" class="card">📖 Versículo Aleatorio</a>
-<a href="index.html" class="card">🌐 English</a>
-    </div>
+      <a href="viewer.html?category-es=perdon" class="card">💗 Perdón</a>
+      <a href="viewer.html?category-es=tentacion" class="card">🔥 Tentación</a>
+      <a href="viewer.html?category-es=guia" class="card">🧭 Guía</a>
+      <a href="viewer.html?category-es=ira" class="card">😠 Ira</a>
+      <a href="viewer.html?category-es=miedo" class="card">😨 Miedo</a>
+      <a href="viewer.html?category-es=preocupacion" class="card">😟 Preocupación</a>
+      <a href="viewer.html?category-es=alegria" class="card">😃 Alegría</a>
+      <a href="viewer.html?category-es=tristeza" class="card">😞 Tristeza</a>
+      <a href="#" id="versiculo-aleatorio-btn" class="card">🔁 Versículo Aleatorio</a>
+      <a href="index.html" class="card">🌐 English</a>
+      <a href="favorites-es.html" class="card">⭐ Favoritos</a>
+
+   </div>
   </main>
+
+  <!-- ✅ Random Verse Button Logic -->
   <script>
-    function goToRandomEs() {
-      const topics = ["esperanza", "amor", "fortaleza", "perdón", "tentación", "guía", "ira", "miedo", "preocupación", "alegría", "tristeza"];
-      const random = topics[Math.floor(Math.random() * topics.length)];
-      window.location.href = "viewer.html?category-es=" + random;
-    }
+    document.getElementById("versiculo-aleatorio-btn").addEventListener("click", function (e) {
+      e.preventDefault();
+      const temas = ["esperanza", "amor", "fortaleza", "perdon", "tentacion", "guia", "ira", "miedo", "preocupacion", "alegria", "tristeza"];
+      const aleatorio = temas[Math.floor(Math.random() * temas.length)];
+      window.location.href = `viewer.html?category-es=${aleatorio}`;
+    });
   </script>
+
 </body>
 </html>
+

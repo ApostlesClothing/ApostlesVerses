@@ -1,36 +1,65 @@
+// --- Date logic to determine today's image ---
 const today = new Date();
 const start = new Date(today.getFullYear(), 0, 0);
 const diff = today - start + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
 const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
 const imageNumber = (dayOfYear % 365) + 1;
 
+// --- Get topic from URL (English or Spanish) ---
 const params = new URLSearchParams(window.location.search);
 const category = params.get("category") || params.get("category-es") || "hope";
-document.getElementById("daily-photo").src = `images/${category}/${imageNumber}.png`;
 
+// --- Load the image ---
+const dailyPhoto = document.getElementById("daily-photo");
+if (dailyPhoto) {
+  dailyPhoto.src = `images/${category}/${imageNumber}.png`;
+  dailyPhoto.onerror = () => {
+    dailyPhoto.src = "images/fallback.png"; // fallback image path
+  };
+}
+
+// --- Store info about the current image ---
 const currentImage = { category, imageNumber };
 
-// Logo click back
-document.getElementById("logo-hotspot").addEventListener("click", () => {
-  window.location.href = "index.html";
-});
+// --- Logo hotspot to return to homepage ---
+const logo = document.getElementById("logo-hotspot");
+if (logo) {
+  logo.addEventListener("click", () => {
+    if (window.location.search.includes("category-es")) {
+      window.location.href = "index-es.html";
+    } else {
+      window.location.href = "index.html";
+    }
+  });
+}
 
+// --- Heart icon favorite logic ---
 const favoriteToggle = document.getElementById("favorite-toggle");
 const heartEffect = document.getElementById("heart-effect");
 
+function getStorageKey() {
+  return (category.includes("á") || window.location.search.includes("category-es"))
+    ? "favorites-es"
+    : "favorites";
+}
+
 function isCurrentFavorited() {
-  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const favorites = JSON.parse(localStorage.getItem(getStorageKey()) || "[]");
   return favorites.some(f =>
     f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
   );
 }
 
 function updateHeartIcon() {
-  favoriteToggle.textContent = isCurrentFavorited() ? "❤️" : "🤍";
+  if (favoriteToggle) {
+    favoriteToggle.textContent = isCurrentFavorited() ? "❤️" : "🤍";
+  }
 }
 
 function toggleFavorite() {
-  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const storageKey = getStorageKey();
+  let favorites = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
   const index = favorites.findIndex(f =>
     f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
   );
@@ -39,37 +68,39 @@ function toggleFavorite() {
     favorites.splice(index, 1); // remove
   } else {
     favorites.push(currentImage); // add
-    heartEffect.classList.add("active");
-    setTimeout(() => heartEffect.classList.remove("active"), 700);
+    if (heartEffect) {
+      heartEffect.classList.add("active");
+      setTimeout(() => heartEffect.classList.remove("active"), 700);
+    }
   }
 
-  localStorage.setItem("favorites", JSON.stringify(favorites));
+  localStorage.setItem(storageKey, JSON.stringify(favorites));
   updateHeartIcon();
 }
 
-favoriteToggle.addEventListener("click", toggleFavorite);
+if (favoriteToggle) {
+  favoriteToggle.addEventListener("click", toggleFavorite);
+  updateHeartIcon(); // Set icon on load
+}
 
-// Initialize heart icon on load
-updateHeartIcon();
-
+// --- Share button logic ---
 const shareButton = document.getElementById("share-button");
+if (shareButton) {
+  shareButton.addEventListener("click", async () => {
+    const imageUrl = `https://apostlesclothing.github.io/ApostlesVerses/images/${category}/${imageNumber}.png`;
 
-shareButton.addEventListener("click", async () => {
-  const imageUrl = `https://apostlesclothing.github.io/ApostlesVerses/index.html`;
-
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: `Verse of the Day - ${category}`,
-        text: `Check out this verse from the "${category}" topic!`,
-        url: imageUrl,
-      });
-    } catch (err) {
-      console.error("Share canceled or failed:", err);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Verse of the Day - ${category}`,
+          text: `Check out this verse from the "${category}" topic!`,
+          url: imageUrl,
+        });
+      } catch (err) {
+        console.error("Share canceled or failed:", err);
+      }
+    } else {
+      alert("Sharing is not supported on this browser.");
     }
-  } else {
-    alert("Sharing is not supported on this browser.");
-  }
-});
-
-
+  });
+}

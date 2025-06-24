@@ -24,11 +24,20 @@
       <a href="viewer.html?category=worry" class="card">😟 Worry</a>
 <a href="viewer.html?category=joy" class="card">😃 Joy</a>
 <a href="viewer.html?category=sadness" class="card">😞 Sadness</a>
-<a href="viewer.html?category=random" class="card">🔁 Random Verse</a>
+<a href="#" id="random-verse-btn" class="card">🔁 Random Verse</a>
 <a href="index-es.html" class="card">🌐 Español</a>
 <a href="favorites.html" class="card">⭐ Favorites</a>
     </div>
   </main>
+<script>
+  document.getElementById("random-verse-btn").addEventListener("click", function (e) {
+    e.preventDefault(); // stop link from jumping
+    const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "joy"];
+    const random = topics[Math.floor(Math.random() * topics.length)];
+    window.location.href = `viewer.html?category=${random}`;
+  });
+</script>
+
 </body>
 </html>
 
