@@ -5,10 +5,51 @@ const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
 const imageNumber = (dayOfYear % 365) + 1;
 
 const params = new URLSearchParams(window.location.search);
-const category = params.get("category") || "hope";
-
+const category = params.get("category") || params.get("category-es") || "hope";
 document.getElementById("daily-photo").src = `images/${category}/${imageNumber}.png`;
 
+const currentImage = { category, imageNumber };
+
+// Logo click back
 document.getElementById("logo-hotspot").addEventListener("click", () => {
   window.location.href = "index.html";
 });
+
+const favoriteToggle = document.getElementById("favorite-toggle");
+const heartEffect = document.getElementById("heart-effect");
+
+function isCurrentFavorited() {
+  const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  return favorites.some(f =>
+    f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
+  );
+}
+
+function updateHeartIcon() {
+  favoriteToggle.textContent = isCurrentFavorited() ? "❤️" : "🤍";
+}
+
+function toggleFavorite() {
+  let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const index = favorites.findIndex(f =>
+    f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
+  );
+
+  if (index >= 0) {
+    favorites.splice(index, 1); // remove
+  } else {
+    favorites.push(currentImage); // add
+    heartEffect.classList.add("active");
+    setTimeout(() => heartEffect.classList.remove("active"), 700);
+  }
+
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  updateHeartIcon();
+}
+
+favoriteToggle.addEventListener("click", toggleFavorite);
+
+// Initialize heart icon on load
+updateHeartIcon();
+
+

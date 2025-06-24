@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Favorites: Hope</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="favorites-style.css" />
+</head>
+<body>
+  <header>
+    <a href="favorites.html" class="back-button">← Back to Favorites</a>
+    <h1>⭐ Favorites: Hope</h1>
+  </header>
+
+  <div class="image-grid" id="favoritesGrid"></div>
+  <p id="no-favs" style="text-align:center; opacity: 0.6;">No favorites saved yet for this topic.</p>
+
+  <div id="lightbox" onclick="this.style.display='none'">
+    <img id="lightbox-img" src="" alt="Full View" />
+  </div>
+
+  <script>
+    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+    const filtered = favorites.filter(f => f.category.toLowerCase() === "hope");
+
+    const container = document.getElementById("favoritesGrid");
+    const noFavs = document.getElementById("no-favs");
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    if (filtered.length === 0) {
+      noFavs.style.display = "block";
+    } else {
+      noFavs.style.display = "none";
+      filtered.forEach(fav => {
+        const img = document.createElement("img");
+        img.src = `images/${fav.category}/${fav.imageNumber}.png`;
+        img.onclick = () => {
+          lightboxImg.src = img.src;
+          lightbox.style.display = "flex";
+        };
+        container.appendChild(img);
+      });
+    }
+  </script>
+</body>
+</html>
