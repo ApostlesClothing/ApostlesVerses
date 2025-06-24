@@ -50,7 +50,7 @@ body {
 }
 #favorite-toggle {
   position: fixed;
-  bottom: 15%;       
+  bottom: 16%;       
   left: 76%;          
   font-size: 2rem;
   cursor: pointer;
