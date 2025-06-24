@@ -31,16 +31,6 @@ body {
   }
 } 
 
-#favorite-toggle {
-  position: fixed;
-  bottom: 6.5%;     
-  left: 67%;        
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 10;
-  user-select: none;
-}
-
 #heart-effect {
   position: fixed;
   top: 50%;
@@ -60,7 +50,7 @@ body {
 }
 #favorite-toggle {
   position: fixed;
-  bottom: 10%;       
+  bottom: 18%;       
   left: 70%;          
   font-size: 2rem;
   cursor: pointer;
@@ -68,6 +58,7 @@ body {
   user-select: none;
   transform: none;    
 }
+
 
 #heart-effect {
   position: fixed;
