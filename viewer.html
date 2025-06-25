@@ -28,22 +28,45 @@
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
-    #favorite-toggle {
-      font-size: 2rem;
-      margin-top: 1rem;
-      cursor: pointer;
-    }
-    #share-button {
-      margin-top: 1rem;
-      display: inline-block;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 10px;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-    }
+    #button-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+  z-index: 100;
+}
+
+#favorite-toggle,
+#share-button {
+  font-size: 2rem;
+  cursor: pointer;
+  user-select: none;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+#favorite-toggle:hover,
+#share-button:hover {
+  background: rgba(255,255,255,0.3);
+}
+@media (max-width: 600px) {
+  #button-bar {
+    bottom: 16px;
+    gap: 16px;
+  }
+
+  #favorite-toggle,
+  #share-button {
+    font-size: 1.6rem;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -56,6 +79,7 @@
   <div id="favorite-toggle">🤍</div>
   <div id="share-button">📤</div>
 </div>
+
 
   <script>
     // --- Get today's day number ---
