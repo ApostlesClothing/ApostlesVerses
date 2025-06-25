@@ -14,6 +14,7 @@
       text-align: center;
       padding: 2rem;
     }
+
     #logo-hotspot {
       position: fixed;
       top: 20px;
@@ -21,6 +22,7 @@
       font-size: 2rem;
       cursor: pointer;
     }
+
     #daily-photo {
       max-width: 90%;
       height: auto;
@@ -28,72 +30,111 @@
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
+
     #button-bar {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 24px;
-  z-index: 100;
-}
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: row-reverse; /* swaps favorite and share sides */
+      gap: 24px;
+      z-index: 100;
+    }
 
-#favorite-toggle,
-#share-button {
-  font-size: 2rem;
-  cursor: pointer;
-  user-select: none;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  padding: 0.6rem 1rem;
-  border-radius: 12px;
-  transition: background 0.3s ease;
-}
+    #favorite-toggle,
+    #share-button {
+      font-size: 2rem;
+      cursor: pointer;
+      user-select: none;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
 
-#favorite-toggle:hover,
-#share-button:hover {
-  background: rgba(255,255,255,0.3);
-}
-@media (max-width: 600px) {
-  #button-bar {
-    bottom: 16px;
-    gap: 16px;
-  }
+    #favorite-toggle:hover,
+    #share-button:hover {
+      background: rgba(255,255,255,0.3);
+    }
 
-  #favorite-toggle,
-  #share-button {
-    font-size: 1.6rem;
-    padding: 0.5rem 0.8rem;
-  }
-}
+    /* Heart burst effect */
+    #heart-effect {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 5rem;
+      color: red;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      transition: opacity 0.4s, transform 0.4s ease-out;
+    }
 
+    #heart-effect.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.8);
+    }
+
+    /* Red flash glow effect */
+    #red-flash {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 0, 0, 0.2);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease-out;
+    }
+
+    #red-flash.active {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      #button-bar {
+        bottom: 16px;
+        gap: 16px;
+      }
+
+      #favorite-toggle,
+      #share-button {
+        font-size: 1.6rem;
+        padding: 0.5rem 0.8rem;
+      }
+    }
   </style>
 </head>
 <body>
 
   <div id="logo-hotspot">←</div>
 
-<img id="daily-photo" src="" alt="Verse of the Day" />
+  <img id="daily-photo" src="" alt="Verse of the Day" />
 
-<div id="button-bar">
+  <div id="red-flash"></div>
+  <div id="heart-effect">❤️</div>
+
+  <div id="button-bar">
   <div id="favorite-toggle">🤍</div>
   <div id="share-button">📤</div>
 </div>
 
 
+
   <script>
-    // --- Get today's day number ---
     const today = new Date();
     const start = new Date(today.getFullYear(), 0, 0);
     const diff = today - start + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
     const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
     const imageNumber = (dayOfYear % 365) + 1;
 
-    // --- Get topic from URL (English or Spanish) ---
     const params = new URLSearchParams(window.location.search);
     const category = params.get("category") || params.get("category-es") || "hope";
 
-    // --- Load the image ---
     const dailyPhoto = document.getElementById("daily-photo");
     if (dailyPhoto) {
       dailyPhoto.src = `images/${category}/${imageNumber}.png`;
@@ -102,10 +143,8 @@
       };
     }
 
-    // --- Store info about the current image ---
     const currentImage = { category, imageNumber };
 
-    // --- Logo hotspot to return to homepage ---
     const logo = document.getElementById("logo-hotspot");
     if (logo) {
       logo.addEventListener("click", () => {
@@ -117,8 +156,8 @@
       });
     }
 
-    // --- Heart icon favorite logic ---
     const favoriteToggle = document.getElementById("favorite-toggle");
+    const shareButton = document.getElementById("share-button");
 
     function getStorageKey() {
       return (category.includes("á") || window.location.search.includes("category-es"))
@@ -147,10 +186,24 @@
         f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
       );
 
+      const heartEffect = document.getElementById("heart-effect");
+      const redFlash = document.getElementById("red-flash");
+
       if (index >= 0) {
-        favorites.splice(index, 1);
+        favorites.splice(index, 1); // remove
       } else {
-        favorites.push(currentImage);
+        favorites.push(currentImage); // add
+
+        // Trigger animation
+        if (heartEffect && redFlash) {
+          heartEffect.classList.add("active");
+          redFlash.classList.add("active");
+
+          setTimeout(() => {
+            heartEffect.classList.remove("active");
+            redFlash.classList.remove("active");
+          }, 600);
+        }
       }
 
       localStorage.setItem(storageKey, JSON.stringify(favorites));
@@ -162,8 +215,6 @@
       updateHeartIcon();
     }
 
-    // --- Share button logic ---
-    const shareButton = document.getElementById("share-button");
     if (shareButton) {
       shareButton.addEventListener("click", async () => {
         const imageUrl = `https://apostlesclothing.github.io/ApostlesVerses/images/${category}/${imageNumber}.png`;
@@ -171,18 +222,19 @@
         if (navigator.share) {
           try {
             await navigator.share({
-              title: `Versículo del Día - ${category}`,
-              text: `Mira este versículo sobre "${category}"`,
+              title: `Verse of the Day - ${category}`,
+              text: `Check out this verse from the "${category}" topic!`,
               url: imageUrl,
             });
           } catch (err) {
             console.error("Share canceled or failed:", err);
           }
         } else {
-          alert("El navegador no soporta compartir.");
+          alert("Sharing is not supported on this browser.");
         }
       });
     }
   </script>
 </body>
 </html>
+

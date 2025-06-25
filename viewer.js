@@ -36,6 +36,7 @@ if (logo) {
 // --- Heart icon favorite logic ---
 const favoriteToggle = document.getElementById("favorite-toggle");
 const heartEffect = document.getElementById("heart-effect");
+const redFlash = document.getElementById("red-flash");
 
 function getStorageKey() {
   return (category.includes("á") || window.location.search.includes("category-es"))
@@ -68,9 +69,15 @@ function toggleFavorite() {
     favorites.splice(index, 1); // remove
   } else {
     favorites.push(currentImage); // add
-    if (heartEffect) {
+
+    // Trigger animation
+    if (heartEffect && redFlash) {
       heartEffect.classList.add("active");
-      setTimeout(() => heartEffect.classList.remove("active"), 700);
+      redFlash.classList.add("active");
+      setTimeout(() => {
+        heartEffect.classList.remove("active");
+        redFlash.classList.remove("active");
+      }, 600);
     }
   }
 
@@ -80,7 +87,7 @@ function toggleFavorite() {
 
 if (favoriteToggle) {
   favoriteToggle.addEventListener("click", toggleFavorite);
-  updateHeartIcon(); // Set icon on load
+  updateHeartIcon();
 }
 
 // --- Share button logic ---
@@ -113,38 +120,12 @@ function toggleMenu() {
   }
 }
 
-// Close ellipsis menu if clicking outside
+// --- Close ellipsis menu if clicking outside ---
 document.addEventListener("click", function (e) {
   const menu = document.getElementById("menuDropdown");
   const icon = document.querySelector(".ellipsis-icon");
   if (menu && icon && !icon.contains(e.target) && !menu.contains(e.target)) {
     menu.style.display = "none";
-<script>
-  function toggleMenu() {
-    const menu = document.getElementById("dropdownMenu");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-  }
-
-  function showSpanish() {
-    // Replace this with logic to load Spanish verses
-    alert("Switching to Spanish version (functionality to be added)");
-  }
-
-  function showFavorites() {
-    // Add logic for showing saved/favorited verses
-    alert("Opening favorites (functionality to be added)");
-  }
-
-  // Optional: close dropdown when clicking outside
-  window.onclick = function(event) {
-    if (!event.target.matches('.menu-button')) {
-      const dropdowns = document.getElementsByClassName("dropdown");
-      for (let i = 0; i < dropdowns.length; i++) {
-        dropdowns[i].style.display = "none";
-      }
-    }
-  }
-</script>
-
   }
 });
+
