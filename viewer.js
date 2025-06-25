@@ -119,5 +119,32 @@ document.addEventListener("click", function (e) {
   const icon = document.querySelector(".ellipsis-icon");
   if (menu && icon && !icon.contains(e.target) && !menu.contains(e.target)) {
     menu.style.display = "none";
+<script>
+  function toggleMenu() {
+    const menu = document.getElementById("dropdownMenu");
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  }
+
+  function showSpanish() {
+    // Replace this with logic to load Spanish verses
+    alert("Switching to Spanish version (functionality to be added)");
+  }
+
+  function showFavorites() {
+    // Add logic for showing saved/favorited verses
+    alert("Opening favorites (functionality to be added)");
+  }
+
+  // Optional: close dropdown when clicking outside
+  window.onclick = function(event) {
+    if (!event.target.matches('.menu-button')) {
+      const dropdowns = document.getElementsByClassName("dropdown");
+      for (let i = 0; i < dropdowns.length; i++) {
+        dropdowns[i].style.display = "none";
+      }
+    }
+  }
+</script>
+
   }
 });

@@ -3,16 +3,160 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Verse Viewer</title>
-  <link rel="stylesheet" href="viewer.css" />
+  <title>Bible Verse Viewer</title>
+  <link rel="stylesheet" href="grid.css" />
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom right, #001F3F, #0074D9);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    #logo-hotspot {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    #daily-photo {
+      max-width: 90%;
+      height: auto;
+      margin-top: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    #favorite-toggle {
+      font-size: 2rem;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    #share-button {
+      margin-top: 1rem;
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <img id="daily-photo" src="" alt="Daily Verse Image" />
+
+  <div id="logo-hotspot">←</div>
+
+  <img id="daily-photo" src="" alt="Verse of the Day" />
+
   <div id="favorite-toggle">🤍</div>
-  <div id="share-button">📤</div>
-  <div id="heart-effect">❤️</div>
-  <div id="logo-hotspot"></div>
-  <div id="heart-effect">❤️</div>
-  <script src="viewer.js"></script>
+  <div id="share-button">📤 Share</div>
+
+  <script>
+    // --- Get today's day number ---
+    const today = new Date();
+    const start = new Date(today.getFullYear(), 0, 0);
+    const diff = today - start + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
+    const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const imageNumber = (dayOfYear % 365) + 1;
+
+    // --- Get topic from URL (English or Spanish) ---
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category") || params.get("category-es") || "hope";
+
+    // --- Load the image ---
+    const dailyPhoto = document.getElementById("daily-photo");
+    if (dailyPhoto) {
+      dailyPhoto.src = `images/${category}/${imageNumber}.png`;
+      dailyPhoto.onerror = () => {
+        dailyPhoto.src = "images/fallback.png";
+      };
+    }
+
+    // --- Store info about the current image ---
+    const currentImage = { category, imageNumber };
+
+    // --- Logo hotspot to return to homepage ---
+    const logo = document.getElementById("logo-hotspot");
+    if (logo) {
+      logo.addEventListener("click", () => {
+        if (window.location.search.includes("category-es")) {
+          window.location.href = "index-es.html";
+        } else {
+          window.location.href = "index.html";
+        }
+      });
+    }
+
+    // --- Heart icon favorite logic ---
+    const favoriteToggle = document.getElementById("favorite-toggle");
+
+    function getStorageKey() {
+      return (category.includes("á") || window.location.search.includes("category-es"))
+        ? "favorites-es"
+        : "favorites";
+    }
+
+    function isCurrentFavorited() {
+      const favorites = JSON.parse(localStorage.getItem(getStorageKey()) || "[]");
+      return favorites.some(f =>
+        f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
+      );
+    }
+
+    function updateHeartIcon() {
+      if (favoriteToggle) {
+        favoriteToggle.textContent = isCurrentFavorited() ? "❤️" : "🤍";
+      }
+    }
+
+    function toggleFavorite() {
+      const storageKey = getStorageKey();
+      let favorites = JSON.parse(localStorage.getItem(storageKey) || "[]");
+
+      const index = favorites.findIndex(f =>
+        f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
+      );
+
+      if (index >= 0) {
+        favorites.splice(index, 1);
+      } else {
+        favorites.push(currentImage);
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(favorites));
+      updateHeartIcon();
+    }
+
+    if (favoriteToggle) {
+      favoriteToggle.addEventListener("click", toggleFavorite);
+      updateHeartIcon();
+    }
+
+    // --- Share button logic ---
+    const shareButton = document.getElementById("share-button");
+    if (shareButton) {
+      shareButton.addEventListener("click", async () => {
+        const imageUrl = `https://apostlesclothing.github.io/ApostlesVerses/images/${category}/${imageNumber}.png`;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: `Versículo del Día - ${category}`,
+              text: `Mira este versículo sobre "${category}"`,
+              url: imageUrl,
+            });
+          } catch (err) {
+            console.error("Share canceled or failed:", err);
+          }
+        } else {
+          alert("El navegador no soporta compartir.");
+        }
+      });
+    }
+  </script>
 </body>
 </html>

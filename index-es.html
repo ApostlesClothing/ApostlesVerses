@@ -3,21 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Temas Bíblicos</title>
+  <title>Seleccione un Tema</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="grid.css" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #001F3F, #0074D9);
+      color: white;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card, .grid a {
+      display: block;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      text-decoration: none;
+      padding: 1.2rem 1rem;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+      white-space: normal;
+      overflow: visible;
+    }
+
+    .card:hover, .grid a:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-5px);
+    }
+
+    .ellipsis-menu {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+
+    .ellipsis-icon {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: white;
+      cursor: pointer;
+      padding: 10px;
+      background: transparent; 
+      border: none;            
+      border-radius: 0;       
+    }
+
+    .ellipsis-icon:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .menu-dropdown {
+      display: none;
+      flex-direction: column;
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      border-radius: 12px;
+      position: absolute;
+      top: 80px;
+      left: 0;
+    }
+
+    .menu-dropdown a {
+      text-decoration: none;
+      color: white;
+      padding: 8px 12px;
+      margin: 4px 0;
+      background: rgba(255,255,255,0.15);
+      border-radius: 8px;
+    }
+
+    .menu-dropdown a:hover {
+      background: rgba(255,255,255,0.3);
+    }
+  </style>
 </head>
 <body>
   <main>
-
- <!-- Ellipsis Menu (Top Left) -->
+    <!-- Ellipsis Menu -->
     <div class="ellipsis-menu">
       <div class="ellipsis-icon" onclick="toggleMenu()">⋮</div>
-      <div class="menu-dropdown" id="menuDropdown" style="display: none;">
-   <a href="index.html" class="back-button">🌐 English</a>
-  <a href="favorites-es.html" class="back-button">⭐ Favorita</a>
-</div>
-
+      <div class="menu-dropdown" id="menuDropdown">
+        <a href="index.html">🌐 English</a>
+        <a href="favorites-es.html">⭐ Favorita</a>
       </div>
     </div>
 
@@ -35,8 +122,10 @@
       <a href="viewer.html?category-es=alegria" class="card">😃 Alegría</a>
       <a href="viewer.html?category-es=tristeza" class="card">😞 Tristeza</a>
       <a href="#" id="versiculo-aleatorio-btn" class="card">🔁 Versículo Aleatorio</a>
-   </div>
+    </div>
   </main>
+
+  <!-- Random Verse Script -->
   <script>
     document.getElementById("versiculo-aleatorio-btn").addEventListener("click", function (e) {
       e.preventDefault();
@@ -46,6 +135,21 @@
     });
   </script>
 
+  <!-- Ellipsis Menu Toggle Script -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuDropdown");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("menuDropdown");
+      const icon = document.querySelector(".ellipsis-icon");
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
 </body>
 </html>
 
