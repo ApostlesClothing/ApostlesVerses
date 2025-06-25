@@ -9,6 +9,18 @@
 </head>
 <body>
   <main>
+
+ <!-- Ellipsis Menu (Top Left) -->
+    <div class="ellipsis-menu">
+      <div class="ellipsis-icon" onclick="toggleMenu()">⋮</div>
+      <div class="menu-dropdown" id="menuDropdown" style="display: none;">
+   <a href="index.html" class="back-button">🌐 English</a>
+  <a href="favorites-es.html" class="back-button">⭐ Favorita</a>
+</div>
+
+      </div>
+    </div>
+
     <h1>Seleccione un Tema de Versículo Bíblico</h1>
     <div class="grid">
       <a href="viewer.html?category-es=esperanza" class="card">🕊 Esperanza</a>
@@ -23,8 +35,6 @@
       <a href="viewer.html?category-es=alegria" class="card">😃 Alegría</a>
       <a href="viewer.html?category-es=tristeza" class="card">😞 Tristeza</a>
       <a href="#" id="versiculo-aleatorio-btn" class="card">🔁 Versículo Aleatorio</a>
-      <a href="index.html" class="card">🌐 English</a>
-      <a href="favorites-es.html" class="card">⭐ Favoritos</a>
    </div>
   </main>
   <script>

@@ -104,3 +104,20 @@ if (shareButton) {
     }
   });
 }
+
+// --- Ellipsis menu toggle logic ---
+function toggleMenu() {
+  const menu = document.getElementById("menuDropdown");
+  if (menu) {
+    menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+  }
+}
+
+// Close ellipsis menu if clicking outside
+document.addEventListener("click", function (e) {
+  const menu = document.getElementById("menuDropdown");
+  const icon = document.querySelector(".ellipsis-icon");
+  if (menu && icon && !icon.contains(e.target) && !menu.contains(e.target)) {
+    menu.style.display = "none";
+  }
+});

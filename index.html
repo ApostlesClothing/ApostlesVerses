@@ -9,6 +9,18 @@
 </head>
 <body>
   <main>
+
+    <!-- Ellipsis Menu (Top Left) -->
+    <div class="ellipsis-menu">
+      <div class="ellipsis-icon" onclick="toggleMenu()">⋮</div>
+      <div class="menu-dropdown" id="menuDropdown" style="display: none;">
+  <a href="index-es.html" class="back-button">🌐 Español</a>
+  <a href="favorites.html" class="back-button">⭐ Favorites</a>
+</div>
+
+      </div>
+    </div>
+
     <h1>Select a Bible Verse Topic</h1>
     <div class="grid">
       <a href="viewer.html?category=hope" class="card">🕊 Hope</a>
@@ -27,15 +39,32 @@
       <a href="favorites.html" class="card">⭐ Favorites</a>
     </div>
   </main>
-<script>
-  document.getElementById("random-verse-btn").addEventListener("click", function (e) {
-    e.preventDefault(); // stop link from jumping
-    const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "joy"];
-    const random = topics[Math.floor(Math.random() * topics.length)];
-    window.location.href = `viewer.html?category=${random}`;
-  });
-</script>
+
+  <!-- Random Verse Script -->
+  <script>
+    document.getElementById("random-verse-btn").addEventListener("click", function (e) {
+      e.preventDefault();
+      const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "joy"];
+      const random = topics[Math.floor(Math.random() * topics.length)];
+      window.location.href = `viewer.html?category=${random}`;
+    });
+  </script>
+
+  <!-- Ellipsis Menu Toggle Script -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menuDropdown");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+
+    document.addEventListener("click", function (e) {
+      const menu = document.getElementById("menuDropdown");
+      const icon = document.querySelector(".ellipsis-icon");
+      if (!icon.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
 
 </body>
 </html>
-
