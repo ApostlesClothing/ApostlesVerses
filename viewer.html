@@ -37,7 +37,7 @@
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      flex-direction: row-reverse; /* swaps favorite and share sides */
+      flex-direction: row-reverse;
       gap: 24px;
       z-index: 100;
     }
@@ -59,7 +59,6 @@
       background: rgba(255,255,255,0.3);
     }
 
-    /* Heart burst effect */
     #heart-effect {
       position: fixed;
       top: 50%;
@@ -78,7 +77,6 @@
       transform: translate(-50%, -50%) scale(1.8);
     }
 
-    /* Red flash glow effect */
     #red-flash {
       position: fixed;
       top: 0; left: 0;
@@ -95,6 +93,27 @@
       opacity: 1;
     }
 
+    #favorite-message {
+      position: fixed;
+      bottom: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    #favorite-message.show {
+      opacity: 1;
+    }
+
     @media (max-width: 600px) {
       #button-bar {
         bottom: 16px;
@@ -106,24 +125,27 @@
         font-size: 1.6rem;
         padding: 0.5rem 0.8rem;
       }
+
+      #favorite-message {
+        bottom: 18%;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <div id="logo-hotspot">←</div>
-
   <img id="daily-photo" src="" alt="Verse of the Day" />
 
   <div id="red-flash"></div>
   <div id="heart-effect">❤️</div>
+  <div id="favorite-message"></div>
 
   <div id="button-bar">
-  <div id="favorite-toggle">🤍</div>
-  <div id="share-button">📤</div>
-</div>
-
-
+    <div id="favorite-toggle">🤍</div>
+    <div id="share-button">📤</div>
+  </div>
 
   <script>
     const today = new Date();
@@ -144,20 +166,20 @@
     }
 
     const currentImage = { category, imageNumber };
-
     const logo = document.getElementById("logo-hotspot");
+
     if (logo) {
       logo.addEventListener("click", () => {
-        if (window.location.search.includes("category-es")) {
-          window.location.href = "index-es.html";
-        } else {
-          window.location.href = "index.html";
-        }
+        window.location.href = window.location.search.includes("category-es")
+          ? "index-es.html" : "index.html";
       });
     }
 
     const favoriteToggle = document.getElementById("favorite-toggle");
+    const heartEffect = document.getElementById("heart-effect");
+    const redFlash = document.getElementById("red-flash");
     const shareButton = document.getElementById("share-button");
+    const favoriteMessage = document.getElementById("favorite-message");
 
     function getStorageKey() {
       return (category.includes("á") || window.location.search.includes("category-es"))
@@ -178,6 +200,14 @@
       }
     }
 
+    function showFavoriteMessage(text) {
+      favoriteMessage.textContent = text;
+      favoriteMessage.classList.add("show");
+      setTimeout(() => {
+        favoriteMessage.classList.remove("show");
+      }, 1500);
+    }
+
     function toggleFavorite() {
       const storageKey = getStorageKey();
       let favorites = JSON.parse(localStorage.getItem(storageKey) || "[]");
@@ -186,15 +216,13 @@
         f.category === currentImage.category && f.imageNumber === currentImage.imageNumber
       );
 
-      const heartEffect = document.getElementById("heart-effect");
-      const redFlash = document.getElementById("red-flash");
-
       if (index >= 0) {
-        favorites.splice(index, 1); // remove
+        favorites.splice(index, 1);
+        showFavoriteMessage("This image has been removed from your favorites");
       } else {
-        favorites.push(currentImage); // add
+        favorites.push(currentImage);
+        showFavoriteMessage("This image has been added to your favorites");
 
-        // Trigger animation
         if (heartEffect && redFlash) {
           heartEffect.classList.add("active");
           redFlash.classList.add("active");
