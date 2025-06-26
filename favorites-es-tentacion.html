@@ -8,9 +8,8 @@
 </head>
 <body>
   <header>
-
     <!-- Modal de Confirmación para Quitar Favorito -->
-    <div id="confirm-unfavorite" style="display:none;" class="modal-overlay">
+    <div id="confirm-unfavorite" class="modal-overlay">
       <div class="modal-box">
         <p>¿Estás seguro de que deseas quitar esta imagen de tus favoritos?</p>
         <div class="modal-buttons">
@@ -20,20 +19,21 @@
       </div>
     </div>
 
-    <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
-    <h1>⭐ Tentación: Esperanza</h1>
+    <a href="favorites.html" class="back-button">← Volver a Favoritos</a>
+    <h1>⭐ Favoritos: Tentación</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
   <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no se han guardado favoritos para este tema.</p>
 
-  <div id="lightbox" onclick="this.style.display='none'">
+  <!-- ✅ Lightbox Fullscreen Viewer -->
+  <div id="lightbox">
     <img id="lightbox-img" src="" alt="Vista Ampliada" />
   </div>
 
   <script>
     const favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
-    const filtered = favorites.filter(f => f.category === "tentación");
+    const filtered = favorites.filter(f => f.category === "tentacion");
 
     const container = document.getElementById("favoritesGrid");
     const noFavs = document.getElementById("no-favs");
@@ -51,6 +51,7 @@
         const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
         const img = document.createElement("img");
         img.src = imgPath;
+        img.alt = "Imagen favorita";
         img.onclick = () => {
           lightboxImg.src = img.src;
           lightbox.style.display = "flex";
@@ -102,7 +103,13 @@
         container.appendChild(wrapper);
       });
     }
+
+    // ✅ Allow click anywhere on lightbox to close it
+    lightbox.onclick = () => {
+      lightbox.style.display = "none";
+    };
   </script>
 </body>
 </html>
+
 

@@ -8,9 +8,8 @@
 </head>
 <body>
   <header>
-
     <!-- Modal de Confirmación para Quitar Favorito -->
-    <div id="confirm-unfavorite" style="display:none;" class="modal-overlay">
+    <div id="confirm-unfavorite" class="modal-overlay">
       <div class="modal-box">
         <p>¿Estás seguro de que deseas quitar esta imagen de tus favoritos?</p>
         <div class="modal-buttons">
@@ -20,14 +19,15 @@
       </div>
     </div>
 
-    <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
-    <h1>⭐ Fortaleza: Esperanza</h1>
+    <a href="favorites.html" class="back-button">← Volver a Favoritos</a>
+    <h1>⭐ Favoritos: Fortaleza</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
   <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no se han guardado favoritos para este tema.</p>
 
-  <div id="lightbox" onclick="this.style.display='none'">
+  <!-- ✅ Lightbox Fullscreen Viewer -->
+  <div id="lightbox">
     <img id="lightbox-img" src="" alt="Vista Ampliada" />
   </div>
 
@@ -51,6 +51,7 @@
         const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
         const img = document.createElement("img");
         img.src = imgPath;
+        img.alt = "Imagen favorita";
         img.onclick = () => {
           lightboxImg.src = img.src;
           lightbox.style.display = "flex";
@@ -102,7 +103,11 @@
         container.appendChild(wrapper);
       });
     }
+
+    // ✅ Allow click anywhere on lightbox to close it
+    lightbox.onclick = () => {
+      lightbox.style.display = "none";
+    };
   </script>
 </body>
 </html>
-
