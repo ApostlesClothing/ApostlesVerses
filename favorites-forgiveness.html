@@ -5,6 +5,7 @@
   <title>Favorites: Forgiveness</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="favorites-style.css" />
+  <meta http-equiv="Cache-Control" content="no-store" />
 </head>
 <body>
   <header>
@@ -20,94 +21,101 @@
     </div>
 
     <a href="favorites.html" class="back-button">← Back to Favorites</a>
-    <h1>⭐ Favorites: Foregiveness</h1>
+    <h1>⭐ Favorites: Forgiveness</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
   <p id="no-favs" style="text-align:center; opacity: 0.6;">No favorites saved yet for this topic.</p>
 
-  <!-- ✅ Lightbox Fullscreen Viewer -->
+  <!-- Lightbox Viewer -->
   <div id="lightbox">
     <img id="lightbox-img" src="" alt="Full View" />
   </div>
 
   <script>
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-    const filtered = favorites.filter(f => f.category === "foregiveness");
-
     const container = document.getElementById("favoritesGrid");
     const noFavs = document.getElementById("no-favs");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
 
-    if (filtered.length === 0) {
-      noFavs.style.display = "block";
-    } else {
-      noFavs.style.display = "none";
-      filtered.forEach(fav => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "image-wrapper";
+    let favorites = [];
+    let filtered = [];
 
-        const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
-        const img = document.createElement("img");
-        img.src = imgPath;
-        img.alt = "Favorite image";
-        img.onclick = () => {
-          lightboxImg.src = img.src;
-          lightbox.style.display = "flex";
-        };
-
-        const heart = document.createElement("div");
-        heart.className = "favorite-icon";
-        heart.textContent = "❤️";
-        heart.onclick = (e) => {
-          e.stopPropagation();
-
-          let pendingRemove = fav;
-          let wrapperToRemove = wrapper;
-
-          const modal = document.getElementById("confirm-unfavorite");
-          const yesBtn = document.getElementById("confirm-yes");
-          const noBtn = document.getElementById("confirm-no");
-
-          modal.style.display = "flex";
-
-          yesBtn.onclick = () => {
-            const updated = favorites.filter(f =>
-              !(f.category === pendingRemove.category && f.imageNumber === pendingRemove.imageNumber)
-            );
-            localStorage.setItem("favorites-es", JSON.stringify(updated));
-            wrapperToRemove.remove();
-            modal.style.display = "none";
-
-            if (updated.filter(f => f.category === "hope").length === 0) {
-              noFavs.style.display = "block";
-            }
-          };
-
-          noBtn.onclick = () => {
-            modal.style.display = "none";
-          };
-        };
-
-        const download = document.createElement("a");
-        download.href = imgPath;
-        download.download = `${fav.category}-${fav.imageNumber}.png`;
-        download.textContent = "⬇️";
-        download.className = "download-button";
-        download.onclick = (e) => e.stopPropagation();
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(heart);
-        wrapper.appendChild(download);
-        container.appendChild(wrapper);
-      });
+    function loadFavorites() {
+      favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+      filtered = favorites.filter(f => f.category === "forgiveness");
     }
 
-    // ✅ Clicking anywhere on the lightbox closes it
+    function renderFavorites() {
+      container.innerHTML = "";
+      if (filtered.length === 0) {
+        noFavs.style.display = "block";
+      } else {
+        noFavs.style.display = "none";
+        filtered.forEach(fav => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "image-wrapper";
+
+          const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
+          const img = document.createElement("img");
+          img.src = imgPath;
+          img.alt = "Favorite image";
+          img.onclick = () => {
+            lightboxImg.src = img.src;
+            lightbox.style.display = "flex";
+          };
+
+          const heart = document.createElement("div");
+          heart.className = "favorite-icon";
+          heart.textContent = "❤️";
+          heart.onclick = (e) => {
+            e.stopPropagation();
+
+            const modal = document.getElementById("confirm-unfavorite");
+            const yesBtn = document.getElementById("confirm-yes");
+            const noBtn = document.getElementById("confirm-no");
+
+            modal.style.display = "flex";
+
+            yesBtn.onclick = () => {
+              // Update favorites
+              favorites = favorites.filter(f =>
+                !(f.category === fav.category && f.imageNumber === fav.imageNumber)
+              );
+              localStorage.setItem("favorites", JSON.stringify(favorites));
+              loadFavorites();
+              filtered = favorites.filter(f => f.category === "hope");
+              renderFavorites();
+              modal.style.display = "none";
+            };
+
+            noBtn.onclick = () => {
+              modal.style.display = "none";
+            };
+          };
+
+          const download = document.createElement("a");
+          download.href = imgPath;
+          download.download = `${fav.category}-${fav.imageNumber}.png`;
+          download.textContent = "⬇️";
+          download.className = "download-button";
+          download.onclick = (e) => e.stopPropagation();
+
+          wrapper.appendChild(img);
+          wrapper.appendChild(heart);
+          wrapper.appendChild(download);
+          container.appendChild(wrapper);
+        });
+      }
+    }
+
     lightbox.onclick = () => {
       lightbox.style.display = "none";
     };
+
+    // Load and render on page load
+    loadFavorites();
+    renderFavorites();
   </script>
 </body>
 </html>

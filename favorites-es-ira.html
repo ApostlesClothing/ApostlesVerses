@@ -1,17 +1,18 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <title>Favoritos: Ira</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="favorites-style.css" />
+  <meta http-equiv="Cache-Control" content="no-store" />
 </head>
 <body>
   <header>
-    <!-- Modal de Confirmación para Quitar Favorito -->
+    <!-- Modal de confirmación -->
     <div id="confirm-unfavorite" class="modal-overlay">
       <div class="modal-box">
-        <p>¿Estás seguro de que deseas quitar esta imagen de tus favoritos?</p>
+        <p>¿Estás seguro de que deseas quitar esta imagen de favoritos?</p>
         <div class="modal-buttons">
           <button id="confirm-yes">Sí</button>
           <button id="confirm-no">No</button>
@@ -19,95 +20,100 @@
       </div>
     </div>
 
-    <a href="favorites.html" class="back-button">← Volver a Favoritos</a>
+    <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
     <h1>⭐ Favoritos: Ira</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
-  <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no se han guardado favoritos para este tema.</p>
+  <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no hay favoritos guardados para este tema.</p>
 
-  <!-- ✅ Lightbox Fullscreen Viewer -->
+  <!-- Lightbox de imagen -->
   <div id="lightbox">
-    <img id="lightbox-img" src="" alt="Vista Ampliada" />
+    <img id="lightbox-img" src="" alt="Vista completa" />
   </div>
 
   <script>
-    const favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
-    const filtered = favorites.filter(f => f.category === "ira");
-
     const container = document.getElementById("favoritesGrid");
     const noFavs = document.getElementById("no-favs");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
 
-    if (filtered.length === 0) {
-      noFavs.style.display = "block";
-    } else {
-      noFavs.style.display = "none";
-      filtered.forEach(fav => {
-        const wrapper = document.createElement("div");
-        wrapper.className = "image-wrapper";
+    let favorites = [];
+    let filtered = [];
 
-        const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
-        const img = document.createElement("img");
-        img.src = imgPath;
-        img.alt = "Imagen favorita";
-        img.onclick = () => {
-          lightboxImg.src = img.src;
-          lightbox.style.display = "flex";
-        };
-
-        const heart = document.createElement("div");
-        heart.className = "favorite-icon";
-        heart.textContent = "❤️";
-        heart.onclick = (e) => {
-          e.stopPropagation();
-
-          let pendingRemove = fav;
-          let wrapperToRemove = wrapper;
-
-          const modal = document.getElementById("confirm-unfavorite");
-          const yesBtn = document.getElementById("confirm-yes");
-          const noBtn = document.getElementById("confirm-no");
-
-          modal.style.display = "flex";
-
-          yesBtn.onclick = () => {
-            const updated = favorites.filter(f =>
-              !(f.category === pendingRemove.category && f.imageNumber === pendingRemove.imageNumber)
-            );
-            localStorage.setItem("favorites-es", JSON.stringify(updated));
-            wrapperToRemove.remove();
-            modal.style.display = "none";
-
-            if (updated.filter(f => f.category === "esperanza").length === 0) {
-              noFavs.style.display = "block";
-            }
-          };
-
-          noBtn.onclick = () => {
-            modal.style.display = "none";
-          };
-        };
-
-        const download = document.createElement("a");
-        download.href = imgPath;
-        download.download = `${fav.category}-${fav.imageNumber}.png`;
-        download.textContent = "⬇️";
-        download.className = "download-button";
-        download.onclick = (e) => e.stopPropagation();
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(heart);
-        wrapper.appendChild(download);
-        container.appendChild(wrapper);
-      });
+    function loadFavorites() {
+      favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
+      filtered = favorites.filter(f => f.category === "ira");
     }
 
-    // ✅ Allow click anywhere on lightbox to close it
+    function renderFavorites() {
+      container.innerHTML = "";
+      if (filtered.length === 0) {
+        noFavs.style.display = "block";
+      } else {
+        noFavs.style.display = "none";
+        filtered.forEach(fav => {
+          const wrapper = document.createElement("div");
+          wrapper.className = "image-wrapper";
+
+          const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
+          const img = document.createElement("img");
+          img.src = imgPath;
+          img.alt = "Imagen favorita";
+          img.onclick = () => {
+            lightboxImg.src = img.src;
+            lightbox.style.display = "flex";
+          };
+
+          const heart = document.createElement("div");
+          heart.className = "favorite-icon";
+          heart.textContent = "❤️";
+          heart.onclick = (e) => {
+            e.stopPropagation();
+
+            const modal = document.getElementById("confirm-unfavorite");
+            const yesBtn = document.getElementById("confirm-yes");
+            const noBtn = document.getElementById("confirm-no");
+
+            modal.style.display = "flex";
+
+            yesBtn.onclick = () => {
+              favorites = favorites.filter(f =>
+                !(f.category === fav.category && f.imageNumber === fav.imageNumber)
+              );
+              localStorage.setItem("favorites-es", JSON.stringify(favorites));
+              loadFavorites();
+              renderFavorites();
+              modal.style.display = "none";
+            };
+
+            noBtn.onclick = () => {
+              modal.style.display = "none";
+            };
+          };
+
+          const download = document.createElement("a");
+          download.href = imgPath;
+          download.download = `${fav.category}-${fav.imageNumber}.png`;
+          download.textContent = "⬇️";
+          download.className = "download-button";
+          download.onclick = (e) => e.stopPropagation();
+
+          wrapper.appendChild(img);
+          wrapper.appendChild(heart);
+          wrapper.appendChild(download);
+          container.appendChild(wrapper);
+        });
+      }
+    }
+
     lightbox.onclick = () => {
       lightbox.style.display = "none";
     };
+
+    // Inicializa
+    loadFavorites();
+    renderFavorites();
   </script>
 </body>
 </html>
