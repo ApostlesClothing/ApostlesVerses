@@ -2,44 +2,43 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Favoritos - 😠 Ira</title>
+  <title>Favoritos: Ira</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="favorites-style.css" />
 </head>
 <body>
-  <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
-  <h1>⭐ Favoritos: 😠 Ira</h1>
+  <header>
+
+    <!-- Modal de Confirmación para Quitar Favorito -->
+    <div id="confirm-unfavorite" style="display:none;" class="modal-overlay">
+      <div class="modal-box">
+        <p>¿Estás seguro de que deseas quitar esta imagen de tus favoritos?</p>
+        <div class="modal-buttons">
+          <button id="confirm-yes">Sí</button>
+          <button id="confirm-no">No</button>
+        </div>
+      </div>
+    </div>
+
+    <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
+    <h1>⭐ Favoritos: Ira</h1>
+  </header>
+
   <div class="image-grid" id="favoritesGrid"></div>
-  <p id="no-favs" style="text-align:center; opacity: 0.6;">No hay favoritos aún para este tema.</p>
-  <div id="lightbox" onclick="this.style.display='none'"><img id="lightbox-img" src="" alt="Vista completa" /></div>
-  <div id="heart-effect">❤️</div>
+  <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no se han guardado favoritos para este tema.</p>
+
+  <div id="lightbox" onclick="this.style.display='none'">
+    <img id="lightbox-img" src="" alt="Vista Ampliada" />
+  </div>
+
   <script>
-    const topic = "ira";
     const favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
-    const filtered = favorites.filter(f => f.category === topic);
+    const filtered = favorites.filter(f => f.category === "ira");
+
     const container = document.getElementById("favoritesGrid");
     const noFavs = document.getElementById("no-favs");
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
-    const heartEffect = document.getElementById("heart-effect");
-
-    function isFavorited(image) {
-      return favorites.some(f => f.category === image.category && f.imageNumber === image.imageNumber);
-    }
-
-    function toggleFavorite(image, icon) {
-      const index = favorites.findIndex(f => f.category === image.category && f.imageNumber === image.imageNumber);
-      if (index >= 0) {
-        favorites.splice(index, 1);
-        icon.textContent = "🤍";
-      } else {
-        favorites.push(image);
-        icon.textContent = "❤️";
-        heartEffect.classList.add("active");
-        setTimeout(() => heartEffect.classList.remove("active"), 700);
-      }
-      localStorage.setItem("favorites-es", JSON.stringify(favorites));
-    }
 
     if (filtered.length === 0) {
       noFavs.style.display = "block";
@@ -48,21 +47,58 @@
       filtered.forEach(fav => {
         const wrapper = document.createElement("div");
         wrapper.className = "image-wrapper";
+
+        const imgPath = `images/${fav.category}/${fav.imageNumber}.png`;
         const img = document.createElement("img");
-        img.src = `images/${fav.category}/${fav.imageNumber}.png`;
+        img.src = imgPath;
         img.onclick = () => {
           lightboxImg.src = img.src;
           lightbox.style.display = "flex";
         };
+
         const heart = document.createElement("div");
         heart.className = "favorite-icon";
-        heart.textContent = isFavorited(fav) ? "❤️" : "🤍";
+        heart.textContent = "❤️";
         heart.onclick = (e) => {
           e.stopPropagation();
-          toggleFavorite(fav, heart);
+
+          let pendingRemove = fav;
+          let wrapperToRemove = wrapper;
+
+          const modal = document.getElementById("confirm-unfavorite");
+          const yesBtn = document.getElementById("confirm-yes");
+          const noBtn = document.getElementById("confirm-no");
+
+          modal.style.display = "flex";
+
+          yesBtn.onclick = () => {
+            const updated = favorites.filter(f =>
+              !(f.category === pendingRemove.category && f.imageNumber === pendingRemove.imageNumber)
+            );
+            localStorage.setItem("favorites-es", JSON.stringify(updated));
+            wrapperToRemove.remove();
+            modal.style.display = "none";
+
+            if (updated.filter(f => f.category === "esperanza").length === 0) {
+              noFavs.style.display = "block";
+            }
+          };
+
+          noBtn.onclick = () => {
+            modal.style.display = "none";
+          };
         };
+
+        const download = document.createElement("a");
+        download.href = imgPath;
+        download.download = `${fav.category}-${fav.imageNumber}.png`;
+        download.textContent = "⬇️";
+        download.className = "download-button";
+        download.onclick = (e) => e.stopPropagation();
+
         wrapper.appendChild(img);
         wrapper.appendChild(heart);
+        wrapper.appendChild(download);
         container.appendChild(wrapper);
       });
     }

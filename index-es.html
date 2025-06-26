@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seleccione un Tema</title>
+  <title>Select a Topic</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="grid.css" />
   <style>
@@ -59,15 +59,14 @@
     }
 
     .ellipsis-icon {
-      font-size: clamp(1.5rem, 5vw, 2.5rem);
-      color: white;
-      cursor: pointer;
-      padding: 10px;
-      background: transparent; 
-      border: none;            
-      border-radius: 0;       
-    }
-
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
     .ellipsis-icon:hover {
       background: rgba(255, 255, 255, 0.25);
     }
@@ -99,16 +98,16 @@
 </head>
 <body>
   <main>
-    <!-- Ellipsis Menu -->
+
     <div class="ellipsis-menu">
       <div class="ellipsis-icon" onclick="toggleMenu()">⋮</div>
       <div class="menu-dropdown" id="menuDropdown">
         <a href="index.html">🌐 English</a>
-        <a href="favorites-es.html">⭐ Favorita</a>
+        <a href="favorites-es.html">⭐ Favoritos</a>
       </div>
     </div>
 
-    <h1>Seleccione un Tema de Versículo Bíblico</h1>
+    <h1>Select a Bible Verse Topic</h1>
     <div class="grid">
       <a href="viewer.html?category-es=esperanza" class="card">🕊 Esperanza</a>
       <a href="viewer.html?category-es=amor" class="card">❤️ Amor</a>
