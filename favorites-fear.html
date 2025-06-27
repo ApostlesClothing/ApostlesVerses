@@ -123,8 +123,14 @@
 </body>
 </html>
 
-      lightbox.style.display = "none";
-    };
-  </script>
+<script>
+  // ✅ Other lightbox code above...
+
+  // ✅ This closes the lightbox when clicked
+  lightbox.onclick = () => {
+    lightbox.style.display = "none";
+  };
+</script>
+
 </body>
 </html>
