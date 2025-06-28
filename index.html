@@ -102,7 +102,7 @@
     <div class="ellipsis-menu">
       <div class="ellipsis-icon" onclick="toggleMenu()">⋮</div>
       <div class="menu-dropdown" id="menuDropdown">
-        <a href="index-es.html">🌐 Español</a>
+                     <a href="viewer.html?category=spanish">🌐 Spanish</a>
         <a href="favorites.html">⭐ Favorites</a>
       </div>
     </div>
@@ -117,7 +117,6 @@
       <a href="viewer.html?category=guidance" class="card">🧭 Guidance</a>
       <a href="viewer.html?category=anger" class="card">😠 Anger</a>
       <a href="viewer.html?category=fear" class="card">😨 Fear</a>
-      <a href="viewer.html?category=joy" class="card">😃 Joy</a>
       <a href="viewer.html?category=sadness" class="card">😞 Sadness</a>
       <a href="#" id="random-verse-btn" class="card">🔁 Random Verse</a>
     </div>
@@ -126,7 +125,7 @@
   <script>
     document.getElementById("random-verse-btn").addEventListener("click", function (e) {
       e.preventDefault();
-      const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "joy"];
+      const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "spanish"];
       const random = topics[Math.floor(Math.random() * topics.length)];
       window.location.href = `viewer.html?category=${random}`;
     });

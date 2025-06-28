@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Favoritos: Alegría</title>
+  <title>Favorites: Spanish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="favorites-style.css" />
   <meta http-equiv="Cache-Control" content="no-store" />
@@ -21,7 +21,7 @@
     </div>
 
     <a href="favorites-es.html" class="back-button">← Volver a Favoritos</a>
-    <h1>⭐ Favoritos: Alegría</h1>
+    <h1>⭐ Favorties: Spanish</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
@@ -42,7 +42,7 @@
     let filtered = [];
 
     function loadFavorites() {
-      favorites = JSON.parse(localStorage.getItem("favorites-es") || "[]");
+      favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
       filtered = favorites.filter(f => f.category === "alergria");
     }
 
