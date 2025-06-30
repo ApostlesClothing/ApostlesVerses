@@ -1,0 +1,220 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom right, #001F3F, #0074D9);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.card {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  text-decoration: none;
+  padding: 1.5rem 1rem;
+  border-radius: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.card:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-5px);
+}
+.back-button {
+  text-decoration: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.image-grid img {
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.image-grid img:hover {
+  transform: scale(1.05);
+}
+.image-wrapper {
+  position: relative;
+}
+
+.download-button {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  font-size: 1.4rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.download-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+/* Overlay that covers the screen */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; /* default hidden */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* The modal confirmation box */
+.modal-box {
+  background: black;
+  padding: 20px 25px;
+  border-radius: 10px;
+  max-width: 90%;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Buttons inside the modal */
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.modal-buttons button:hover {
+  background-color: #ddd;
+}
+
+#confirm-yes {
+  background-color: #0074D9;
+  color: white;
+}
+
+#confirm-no {
+  background-color: #ddd;
+  color: #333;
+}
+
+#confirm-yes:hover {
+  background-color: #005fa3;
+}
+
+#confirm-no:hover {
+  background-color: #bbb;
+}
+
+
+#lightbox {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  object-fit: contain;
+}
+/* Theme overrides using body classes */
+body.theme-blue {
+  background: linear-gradient(to bottom right, #001F3F, #0074D9);
+  color: white;
+}
+
+body.red-theme {
+  background: linear-gradient(to bottom right, #8B0000, #FF0000);
+  color: white;
+}
+body.orange-theme {
+  background: linear-gradient(to bottom right, #FF851B, #FF6300);
+  color: white;
+}
+
+body.blue-theme {
+  background: linear-gradient(to bottom right, #001F3F, #0074D9);
+  color: white;
+}
+body.yellow-theme {
+  background: linear-gradient(to bottom right, #B8860B, #DAA520);
+  color: white;
+}
+
+body.green-theme {
+  background: linear-gradient(to bottom right, #2ECC40, #01FF70);
+  color: white;
+}
+body.purple-theme {
+  background: linear-gradient(to bottom right, #B10DC9, #9B59B6);
+  color: white;
+}
+body.pink-theme {
+  background: linear-gradient(to bottom right, #F012BE, #FF69B4);
+  color: white;
+}
+body.cyan-theme {
+  background: linear-gradient(to bottom right, #00FFFF, #00CED1);
+  color: white;
+}
+body.dark-green-theme {
+  background: linear-gradient(to bottom right, #006400, #228B22);
+  color: white;
+}
+body.dark-pink-theme {
+  background: linear-gradient(to bottom right, #C71585, #FF1493);
+  color: white;
+}
+body.dark-blue-theme {
+  background: linear-gradient(to bottom right, #00008B, #001F3F);
+  color: white;
+}
+
+
+

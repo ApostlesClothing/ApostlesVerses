@@ -61,17 +61,33 @@ body.theme-blue {
   color: white;
 }
 
-body.theme-dark {
-  background: #111;
-  color: #eee;
-}
-
-body.theme-light {
-  background: #ffffff;
-  color: #000000;
-}
-
-body.theme-red {
+body.red-theme {
   background: linear-gradient(to bottom right, #8B0000, #FF0000);
   color: white;
 }
+body.orange-theme {
+  background: linear-gradient(to bottom right, #FF851B, #FF6300);
+  color: white;
+}
+
+body.blue-theme {
+  background: linear-gradient(to bottom right, #001F3F, #0074D9);
+  color: white;
+}
+body.yellow-theme {
+  background: linear-gradient(to bottom right, #FFDC00, #FFD700);
+  color: white;
+}
+
+body.dark-theme {
+  background-color: #111;
+  color: #eee;
+}
+
+body.light-theme {
+  background-color: #ffffff;
+  color: #000;
+}
+
+
+
