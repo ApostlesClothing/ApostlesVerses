@@ -29,17 +29,6 @@ h1 {
   padding: 1rem;
 }
 
-.back-button {
-  text-decoration: none;
-  background: rgba(255,255,255,0.2);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-}
-
 .card {
   background: rgba(255, 255, 255, 0.1);
   padding: 2rem 1rem;
@@ -66,4 +55,23 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 1rem;
 }
+/* Theme overrides using body classes */
+body.theme-blue {
+  background: linear-gradient(to bottom right, #001F3F, #0074D9);
+  color: white;
+}
 
+body.theme-dark {
+  background: #111;
+  color: #eee;
+}
+
+body.theme-light {
+  background: #ffffff;
+  color: #000000;
+}
+
+body.theme-red {
+  background: linear-gradient(to bottom right, #8B0000, #FF0000);
+  color: white;
+}
