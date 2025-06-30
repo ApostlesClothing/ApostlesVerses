@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bible Verse Viewer</title>
   <link rel="stylesheet" href="grid.css" />
+  <link rel="stylesheet" href="theme.css" />
+
   <style>
     body {
       margin: 0;
@@ -148,6 +150,9 @@
   </div>
 
   <script>
+const savedTheme = localStorage.getItem("theme") || "blue";
+  document.body.classList.add(savedTheme + "-theme");
+
     const today = new Date();
     const start = new Date(today.getFullYear(), 0, 0);
     const diff = today - start + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);

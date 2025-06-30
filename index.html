@@ -6,6 +6,7 @@
   <title>Select a Topic</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="grid.css" />
+  <link rel="stylesheet" href="theme.css" />
   <style>
     body {
       margin: 0;
@@ -105,7 +106,7 @@
       <div class="menu-dropdown" id="menuDropdown">
         <a href="viewer.html?category=spanish">🌐 Spanish</a>
         <a href="favorites.html">⭐ Favorites</a>
-        <a href="theme.html">🎨 Change Theme</a>
+        <a href="theme.html">🎨 Change Background Color</a>
       </div>
     </div>
 
@@ -125,6 +126,9 @@
   </main>
 
   <script>
+const savedTheme = localStorage.getItem("theme") || "blue";
+  document.body.classList.add(savedTheme + "-theme");
+
     document.getElementById("random-verse-btn").addEventListener("click", function (e) {
       e.preventDefault();
       const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "spanish"];
