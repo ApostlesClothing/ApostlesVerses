@@ -150,8 +150,8 @@
   </div>
 
   <script>
-const savedTheme = localStorage.getItem("theme") || "blue";
-  document.body.classList.add(savedTheme + "-theme");
+    const savedTheme = localStorage.getItem("theme") || "blue";
+    document.body.classList.add(savedTheme + "-theme");
 
     const today = new Date();
     const start = new Date(today.getFullYear(), 0, 0);
@@ -175,8 +175,7 @@ const savedTheme = localStorage.getItem("theme") || "blue";
 
     if (logo) {
       logo.addEventListener("click", () => {
-        window.location.href = window.location.search.includes("category-es")
-          ? "index.html" : "index.html";
+        window.location.href = "index.html";
       });
     }
 
@@ -223,10 +222,16 @@ const savedTheme = localStorage.getItem("theme") || "blue";
 
       if (index >= 0) {
         favorites.splice(index, 1);
-        showFavoriteMessage("This image has been removed from your favorites");
+        const msg = (category === "spanish")
+          ? "Esta imagen ha sido eliminada de tus favoritos"
+          : "This image has been removed from your favorites";
+        showFavoriteMessage(msg);
       } else {
         favorites.push(currentImage);
-        showFavoriteMessage("This image has been added to your favorites");
+        const msg = (category === "spanish")
+          ? "Esta imagen ha sido añadida a tus favoritos"
+          : "This image has been added to your favorites";
+        showFavoriteMessage(msg);
 
         if (heartEffect && redFlash) {
           heartEffect.classList.add("active");
@@ -270,4 +275,3 @@ const savedTheme = localStorage.getItem("theme") || "blue";
   </script>
 </body>
 </html>
-
