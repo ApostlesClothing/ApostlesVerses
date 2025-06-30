@@ -186,7 +186,6 @@ body.yellow-theme {
   background: linear-gradient(to bottom right, #B8860B, #DAA520);
   color: white;
 }
-
 body.green-theme {
   background: linear-gradient(to bottom right, #2ECC40, #01FF70);
   color: white;
@@ -213,6 +212,14 @@ body.dark-pink-theme {
 }
 body.dark-blue-theme {
   background: linear-gradient(to bottom right, #00008B, #001F3F);
+  color: white;
+}
+body.dark-red-theme {
+  background: linear-gradient(to bottom right, #8B0000, #B22222); /* dark red to firebrick */
+  color: white;
+}
+body.dark-purple-theme {
+  background: linear-gradient(to bottom right, #4B0082, #6A0DAD); /* indigo to deep purple */
   color: white;
 }
 

@@ -2,27 +2,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
   <title>Your Color Topics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="theme.css" />
 </head>
 <body>
-<a href="index.html" class="back-button">← Return To Home</a>
-<h1>Select a Color Background</h1>
-
+  <a href="index.html" class="back-button">← Return To Home</a>
+  <h1>Select a Color Background</h1>
 
   <div class="grid">
     <div class="card" onclick="setTheme('red')">🔴 Red</div>
-    <div class="card" onclick="setTheme('orange')"> 🟠 Orange</div>
-    <div class="card" onclick="setTheme('yellow')"> 🟡 Yellow</div>
-    <div class="card" onclick="setTheme('green')"> 🟢 Green</div>
-    <div class="card" onclick="setTheme('dark-green')"> 🟢 Dark Green</div>
+    <div class="card" onclick="setTheme('dark-red')">🔴 Dark Red</div>
+    <div class="card" onclick="setTheme('orange')">🟠 Orange</div>
+    <div class="card" onclick="setTheme('yellow')">🟡 Yellow</div>
+    <div class="card" onclick="setTheme('green')">🟢 Green</div>
+    <div class="card" onclick="setTheme('dark-green')">🟢 Dark Green</div>
     <div class="card" onclick="setTheme('blue')">🔵 Blue</div>
-    <div class="card" onclick="setTheme('dark-blue')"> 🔵 Dark Blue</div>
+    <div class="card" onclick="setTheme('dark-blue')">🔵 Dark Blue</div>
     <div class="card" onclick="setTheme('purple')">🟣 Purple</div>
+    <div class="card" onclick="setTheme('dark-purple')">🟣 Dark Purple</div>
     <div class="card" onclick="setTheme('pink')">🌸 Pink</div>
-    <div class="card" onclick="setTheme('dark-pink')"> 🌸 Dark Pink</div>
+    <div class="card" onclick="setTheme('dark-pink')">🌸 Dark Pink</div>
   </div>
 
   <script>
@@ -31,10 +32,12 @@
     document.body.classList.add(savedTheme + "-theme");
 
     // Theme setter function
-  function setTheme(theme) {
-  localStorage.setItem('theme', theme);
-  document.body.className = theme + '-theme'; // Apply theme instantly
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+      document.body.className = theme + '-theme'; // Apply theme instantly
+      // Optional: Redirect if you want to go to index.html
+      // window.location.href = 'index.html';
+    }
   </script>
 </body>
 </html>
-
