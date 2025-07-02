@@ -131,7 +131,7 @@ const savedTheme = localStorage.getItem("theme") || "blue";
 
     document.getElementById("random-verse-btn").addEventListener("click", function (e) {
       e.preventDefault();
-      const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "worry", "sadness", "spanish"];
+      const topics = ["hope", "love", "strength", "forgiveness", "temptation", "guidance", "anger", "fear", "sadness"];
       const random = topics[Math.floor(Math.random() * topics.length)];
       window.location.href = `viewer.html?category=${random}`;
     });
