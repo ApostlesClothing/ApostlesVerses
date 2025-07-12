@@ -15,18 +15,18 @@
       <div class="modal-box">
         <p>Are you sure you want to remove this image from your favorites?</p>
         <div class="modal-buttons">
-          <button id="confirm-yes">Yes</button>
+          <button id="confirm-yes">Sí</button>
           <button id="confirm-no">No</button>
         </div>
       </div>
     </div>
 
-    <a href="favorites.html" class="back-button">← Back to Favorites</a>
+    <a href="favorites.html" class="back-button">← Volver a Favoritos</a>
     <h1>⭐ Favorites: Spanish</h1>
   </header>
 
   <div class="image-grid" id="favoritesGrid"></div>
-  <p id="no-favs" style="text-align:center; opacity: 0.6;">No favorites saved yet for this topic.</p>
+  <p id="no-favs" style="text-align:center; opacity: 0.6;">Aún no hay favoritos guardados para este tema.</p>
 
   <!-- Lightbox Viewer -->
   <div id="lightbox">
@@ -88,7 +88,7 @@ const savedTheme = localStorage.getItem("theme") || "blue";
               );
               localStorage.setItem("favorites", JSON.stringify(favorites));
               loadFavorites();
-              filtered = favorites.filter(f => f.category === "hope");
+              filtered = favorites.filter(f => f.category === "spanish");
               renderFavorites();
               modal.style.display = "none";
             };

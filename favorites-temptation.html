@@ -88,7 +88,7 @@ const savedTheme = localStorage.getItem("theme") || "blue";
               );
               localStorage.setItem("favorites", JSON.stringify(favorites));
               loadFavorites();
-              filtered = favorites.filter(f => f.category === "hope");
+              filtered = favorites.filter(f => f.category === "temptation");
               renderFavorites();
               modal.style.display = "none";
             };
