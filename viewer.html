@@ -42,6 +42,7 @@
       margin-top: 3rem;
       border-radius: 16px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      cursor: pointer; /* Lightbox trigger */
     }
 
     #button-bar {
@@ -127,6 +128,43 @@
       opacity: 1;
     }
 
+    /* ✅ LIGHTBOX STYLES */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      padding-top: 60px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .lightbox-content {
+      margin: auto;
+      display: block;
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .lightbox-image {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
+
     @media (max-width: 600px) {
       #button-bar {
         bottom: 16px;
@@ -154,7 +192,7 @@
 <body>
 
   <a href="index.html" class="back-button">← Back to Topics</a>
-  <img id="daily-photo" src="" alt="Verse of the Day" />
+  <img id="daily-photo" class="verse-img" src="" alt="Verse of the Day" />
 
   <div id="red-flash"></div>
   <div id="heart-effect">❤️</div>
@@ -163,6 +201,12 @@
   <div id="button-bar">
     <div id="favorite-toggle">🤍</div>
     <div id="share-button">📤</div>
+  </div>
+
+  <!-- ✅ LIGHTBOX HTML -->
+  <div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img class="lightbox-image" src="" alt="Enlarged Verse" />
   </div>
 
   <script>
@@ -281,6 +325,31 @@
         }
       });
     }
+
+    // ✅ LIGHTBOX SCRIPT
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImage = document.querySelector(".lightbox-image");
+    const closeBtn = document.querySelector(".close");
+
+    if (dailyPhoto) {
+      dailyPhoto.addEventListener("click", () => {
+        lightboxImage.src = dailyPhoto.src;
+        lightbox.style.display = "block";
+      });
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        lightbox.style.display = "none";
+      });
+    }
+
+    window.addEventListener("click", (e) => {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+      }
+    });
   </script>
 </body>
 </html>
+

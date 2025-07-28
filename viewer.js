@@ -15,15 +15,32 @@ if (dailyPhoto) {
   dailyPhoto.src = `images/${category}/${imageNumber}.png`;
   dailyPhoto.onerror = () => {
     dailyPhoto.src = "images/fallback.png";
-    dailyPhoto.onerror = null; // Prevent infinite fallback loop
+    dailyPhoto.onerror = null;
   };
+}
 
- // Add zoom toggle directly
-dailyPhoto.style.cursor = "zoom-in";
-dailyPhoto.addEventListener("click", () => {
-  dailyPhoto.classList.toggle("zoomed");
-  dailyPhoto.style.cursor = dailyPhoto.classList.contains("zoomed") ? "zoom-out" : "zoom-in";
-});
+// --- Lightbox setup ---
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.querySelector(".lightbox-image");
+const closeBtn = document.querySelector(".close");
+
+if (dailyPhoto && lightbox && lightboxImage) {
+  dailyPhoto.addEventListener("click", () => {
+    lightboxImage.src = dailyPhoto.src;
+    lightbox.style.display = "block";
+  });
+}
+
+if (closeBtn && lightbox) {
+  closeBtn.addEventListener("click", () => {
+    lightbox.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      lightbox.style.display = "none";
+    }
+  });
 }
 
 // --- Store info about the current image ---
@@ -78,7 +95,6 @@ function toggleFavorite() {
   } else {
     favorites.push(currentImage); // add
 
-    // Trigger animation
     if (heartEffect && redFlash) {
       heartEffect.classList.add("active");
       redFlash.classList.add("active");
@@ -136,3 +152,4 @@ document.addEventListener("click", function (e) {
     menu.style.display = "none";
   }
 });
+
