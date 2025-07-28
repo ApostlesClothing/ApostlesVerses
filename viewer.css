@@ -13,6 +13,14 @@ body {
   height: 100vh;
   object-fit: contain;
   z-index: 0;
+  transition: transform 0.3s ease;
+  cursor: zoom-in;
+}
+
+#daily-photo.zoomed {
+  transform: scale(1.8);
+  cursor: zoom-out;
+  z-index: 999;
 }
 
 #logo-hotspot {
@@ -66,14 +74,16 @@ body {
   user-select: none;
 }
 
-
 @media (max-width: 600px) {
   #favorite-toggle {
     left: 35%;
   }
+
   #share-button {
     right: 35%;
   }
+}
+
 #favorite-message {
   position: fixed;
   bottom: 10%;
@@ -95,5 +105,20 @@ body {
   opacity: 1;
 }
 
+#daily-photo.zoomed {
+  transform: scale(1.5);
+  transition: transform 0.3s ease;
+  z-index: 999;
+}
 
+.back-button {
+  text-decoration: none;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
 

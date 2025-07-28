@@ -14,8 +14,16 @@ const dailyPhoto = document.getElementById("daily-photo");
 if (dailyPhoto) {
   dailyPhoto.src = `images/${category}/${imageNumber}.png`;
   dailyPhoto.onerror = () => {
-    dailyPhoto.src = "images/fallback.png"; // fallback image path
+    dailyPhoto.src = "images/fallback.png";
+    dailyPhoto.onerror = null; // Prevent infinite fallback loop
   };
+
+ // Add zoom toggle directly
+dailyPhoto.style.cursor = "zoom-in";
+dailyPhoto.addEventListener("click", () => {
+  dailyPhoto.classList.toggle("zoomed");
+  dailyPhoto.style.cursor = dailyPhoto.classList.contains("zoomed") ? "zoom-out" : "zoom-in";
+});
 }
 
 // --- Store info about the current image ---
@@ -128,4 +136,3 @@ document.addEventListener("click", function (e) {
     menu.style.display = "none";
   }
 });
-
